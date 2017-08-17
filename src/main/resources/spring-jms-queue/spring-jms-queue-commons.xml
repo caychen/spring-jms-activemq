@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:core="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core">
+
+	<import resource="classpath*:spring-jms-commons/spring-jms-commons.xml"/>
+	
+	<!-- 队列模式(生产者/消费者) -->
+	<bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg name="name" value="queue"></constructor-arg>
+	</bean>
+	
+</beans>

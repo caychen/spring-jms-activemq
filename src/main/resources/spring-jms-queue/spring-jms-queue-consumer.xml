@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:core="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core">
+
+	<import resource="classpath*:spring-jms-queue/spring-jms-queue-commons.xml"/>
+	
+	<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="destination" ref="queueDestination"></property>
+		<property name="connectionFactory" ref="connectionFactory"></property>
+		<property name="messageListener">
+			<bean class="org.com.cay.listener.MessageListenerEx"></bean>
+		</property>
+	</bean>
+	
+</beans>

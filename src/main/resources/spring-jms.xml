@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:core="http://activemq.apache.org/schema/core"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core">
+
+	<!-- <import resource="classpath*:spring-jms-queue/spring-jms-queue-consumer.xml"/>
+	<import resource="classpath*:spring-jms-queue/spring-jms-queue-producer.xml"/> -->
+	
+	<import resource="classpath*:spring-jms-topic/spring-jms-topic-publisher.xml"/>
+	<import resource="classpath*:spring-jms-topic/spring-jms-topic-subscriber.xml"/>
+
+</beans>
