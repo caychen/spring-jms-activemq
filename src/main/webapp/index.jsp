@@ -23,11 +23,11 @@
 					dataType:'text',
 					success:function(data){
 						if(data !== ''){
-							alert(data);
+							alert("发送完毕...");
 						}
 					},
 					error:function(){
-						alert('ERROR...');
+						alert('发送失败...');
 					}
 				});
 			});

@@ -2,17 +2,40 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:core="http://activemq.apache.org/schema/core"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	xmlns:jms="http://www.springframework.org/schema/jms"
+	xsi:schemaLocation="http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core">
 
 	<import resource="classpath*:spring-jms-queue/spring-jms-queue-commons.xml"/>
 	
-	<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+	<!-- 定义Queue监听容器 -->
+	
+	<!-- 方法1、配置一个默认的消息监听容器：DefaultMessageListenerContainer -->
+	<!-- <bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="destination" ref="queueDestination"></property>
 		<property name="connectionFactory" ref="connectionFactory"></property>
 		<property name="messageListener">
 			<bean class="org.com.cay.listener.MessageListenerEx"></bean>
 		</property>
-	</bean>
+	</bean> -->
+
+	<!-- 
+		配置Queue监听器bean
+			1、实现MessageListener接口，重写onMessage方法
+			2、使用@Component或者@Service注解，并在监听容器中指定监听时的处理函数，如MessageListenerEx2的receive方法
+	 -->	
+	<bean id="messageListenerEx" class="org.com.cay.listener.MessageListenerEx"></bean>
+	<!-- 方法2、使用jms标签配置Queue监听容器，其中Queue模式的destination-type设为queue，Topic模式的destination-type设为topic -->
+	<!-- 定义Queue监听器 -->
+	<jms:listener-container acknowledge="auto" connection-factory="connectionFactory" destination-type="queue" container-type="default">
+		<!-- 
+			jms:listener标签的destination属性表示目的地的名字，而非目的地的id
+			ref表示监听器的id
+			method表示监听处理函数
+		 -->
+		<jms:listener destination="queue" ref="messageListenerEx"/>
+		<jms:listener destination="queue" ref="messageListenerEx2" method="receive"/>
+	</jms:listener-container>
 	
 </beans>
